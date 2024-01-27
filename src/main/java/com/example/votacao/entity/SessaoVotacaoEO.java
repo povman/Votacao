@@ -8,6 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.Optional;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 public class SessaoVotacaoEO {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +28,7 @@ public class SessaoVotacaoEO {
 
     @Column(name = "data_abertura")
     private LocalDateTime dataAbertura;
-    
+
     @Column(name = "duracao_em_minutos")
     private Long duracaoEmMinutos;
 
@@ -53,16 +56,14 @@ public class SessaoVotacaoEO {
         this.dataAbertura = dataAbertura;
     }
 
+    @NotNull
     public Long getDuracaoEmMinutos() {
-        return duracaoEmMinutos;
+//        return duracaoEmMinutos;
+        return Optional.ofNullable(duracaoEmMinutos).orElse(0L);
     }
 
     public void setDuracaoEmMinutos(Long duracaoEmMinutos) {
         this.duracaoEmMinutos = duracaoEmMinutos;
     }
 
-    
-
-    
 }
-

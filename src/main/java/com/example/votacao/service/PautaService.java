@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -60,14 +61,18 @@ public ResponseEntity<Map<String, Object>> abrirSessaoVotacao(Long pautaId, Long
 }
 
     
-    
-    public boolean isSessaoVotacaoAberta(Long pautaId) {
+    @NotNull
+public boolean isSessaoVotacaoAberta(Long pautaId) {
     PautaEO pauta = pautaRepository.findById(pautaId).orElse(null);
 
     if (pauta != null && pauta.getSessaoVotacao() != null) {
         SessaoVotacaoEO sessaoVotacao = pauta.getSessaoVotacao();
         LocalDateTime dataAtual = LocalDateTime.now();
-        LocalDateTime dataFechamento = sessaoVotacao.getDataAbertura().plusMinutes(sessaoVotacao.getDuracaoEmMinutos());
+
+        // Verifica se duracaoEmMinutos é nulo e define um valor padrão (por exemplo, 1 minuto)
+        Long duracaoEmMinutos = sessaoVotacao.getDuracaoEmMinutos() != null ? sessaoVotacao.getDuracaoEmMinutos() : 1L;
+
+        LocalDateTime dataFechamento = sessaoVotacao.getDataAbertura().plusMinutes(duracaoEmMinutos);
 
         boolean votacaoAberta = dataAtual.isBefore(dataFechamento);
 
