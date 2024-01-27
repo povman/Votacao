@@ -10,6 +10,12 @@ Prover um sistema simples para votação utilizando os endpoins para que os usu�
 - Abrir Sessao de Votação por período de Tempo.
 - Votar na Pauta.
 Como proposto basta utilizar os enpoints respectivos para consumir a API e ela entrega os resultados seguinto o padrão Rest.
+Foi implementado Testes Unitários  e um teste de desempenho ao listar Pastas, basta executar :
+
+1 - mvn test : para realizar todos os testes
+
+2 - mvn test -Dtest=PautaServicePerformanceTest  : para realizar o teste específico de desempenho.
+
 
 # Swagger + Heroku 
 ## Foi disponibilizado uma documentação  utilizando o Swagger juntamente com Heroku para testes.
