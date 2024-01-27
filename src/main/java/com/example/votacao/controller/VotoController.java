@@ -1,5 +1,6 @@
 package com.example.votacao.controller;
 
+import static com.example.votacao.controller.CpfController.isValidCPF;
 import com.example.votacao.service.PautaService;
 import com.example.votacao.service.VotoService;
 import java.util.HashMap;
@@ -83,34 +84,5 @@ public class VotoController {
         }
     }
 
-public static boolean isValidCPF(String cpf) {
-        cpf = cpf.replaceAll("[^\\d]", "");
-        if (cpf.length() != 11) {
-            return false;
-        }
-        if (cpf.matches("(\\d)\\1*")) {
-            return false;
-        }
-        int sum = 0;
-        for (int i = 0; i < 9; i++) {
-            sum += Character.getNumericValue(cpf.charAt(i)) * (10 - i);
-        }
-        int firstDigit = 11 - (sum % 11);
-        if (firstDigit > 9) {
-            firstDigit = 0;
-        }
-        if (Character.getNumericValue(cpf.charAt(9)) != firstDigit) {
-            return false;
-        }
-        sum = 0;
-        for (int i = 0; i < 10; i++) {
-            sum += Character.getNumericValue(cpf.charAt(i)) * (11 - i);
-        }
-        int secondDigit = 11 - (sum % 11);
-        if (secondDigit > 9) {
-            secondDigit = 0;
-        }
-        return Character.getNumericValue(cpf.charAt(10)) == secondDigit;
-    }
 
 }
